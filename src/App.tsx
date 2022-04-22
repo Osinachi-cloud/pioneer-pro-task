@@ -1,25 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, { useState } from 'react';
 import './App.css';
+import { ThemeProvider } from 'styled-components';
+import { useTheme } from './ThemeManager';
+import Left from './components/pages/left';
+import Right from './components/pages/right';
+import { Actions } from './interfaces/interfaces';
+import { Wrapper } from "./style";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+
+const App: React.FC = () => {
+  const [actionList, setActionList] = useState<Actions[]>([]);  
+  const [messages, setMessages] = useState<string>("");
+  const [addedButtonMessages, setAddedButtonMessages] = useState<string>("");
+  const theme = useTheme(); 
+
+return (
+    <ThemeProvider theme={{ mode: theme.mode }}>
+      <Wrapper>
+        <Left    
+          actionList = {actionList}
+          setActionList = {setActionList}
+          setMessages = {setMessages}
+          setAddedButtonMessages ={setAddedButtonMessages}
+
+        />
+        <Right
+          actionList = {actionList}
+          messages = {messages}
+          addedButtonMessages ={addedButtonMessages}
+        />
+ 
+      </Wrapper>
+    </ThemeProvider>
   );
 }
 
